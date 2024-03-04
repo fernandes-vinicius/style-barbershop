@@ -9,6 +9,7 @@ export abstract class DateManger {
 
 class DateFnsDateManger implements DateManger {
   date: DateType
+
   locale
 
   constructor(date: DateType) {
