@@ -13,8 +13,8 @@ type RootLayoutProps = Readonly<{ children: React.ReactNode }>
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body className={fontSans.variable}>{children}</body>
+    <html lang="en" className={fontSans.variable}>
+      <body>{children}</body>
     </html>
   )
 }
