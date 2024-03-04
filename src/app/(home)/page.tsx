@@ -1,12 +1,10 @@
-import Link from 'next/link'
-
 import { BookingItem } from '@/app/_components/booking-item'
 import { Header } from '@/app/_components/header'
 import { SectionTitle } from '@/app/_components/section-title'
 import { dateManager } from '@/app/_lib/date-manager'
 import { db } from '@/app/_lib/prisma'
 
-import { BarbershopItem } from './_components/barbershop-item'
+import { BarbershopList } from './_components/barbershop-list'
 import { SearchForm } from './_components/search-form'
 
 export default async function Home() {
@@ -34,15 +32,14 @@ export default async function Home() {
         <BookingItem />
       </div>
 
-      <div className="mt-6 flex flex-col gap-3 pb-12">
+      <div className="mt-6 space-y-3">
         <SectionTitle className="px-5">Recomendados</SectionTitle>
-        <div className="flex items-center gap-4 overflow-y-auto px-5 [&::-webkit-scrollbar]:hidden">
-          {barbershops.map((barbershop) => (
-            <Link href={`/barbershop/${barbershop.id}`} key={barbershop.id}>
-              <BarbershopItem barbershop={barbershop} />
-            </Link>
-          ))}
-        </div>
+        <BarbershopList barbershops={barbershops} />
+      </div>
+
+      <div className="mt-6 space-y-3 pb-12">
+        <SectionTitle className="px-5">Populares</SectionTitle>
+        <BarbershopList barbershops={barbershops} />
       </div>
     </main>
   )
