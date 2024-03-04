@@ -14,7 +14,9 @@ type RootLayoutProps = Readonly<{ children: React.ReactNode }>
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={fontSans.variable}>
-      <body>{children}</body>
+      <body className="dark">
+        <div className="flex h-screen flex-col">{children}</div>
+      </body>
     </html>
   )
 }
