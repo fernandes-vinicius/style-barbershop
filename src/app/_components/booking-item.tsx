@@ -14,7 +14,7 @@ export function BookingItem() {
       <CardContent className="p-0">
         <div className="flex items-center">
           <div className="flex-1 space-y-3 border-r p-3">
-            <Badge className="text-primary bg-[#221C3D] font-bold hover:bg-[#221C3D]">
+            <Badge className="bg-[#221C3D] font-bold text-primary hover:bg-[#221C3D]">
               Confirmado
             </Badge>
 

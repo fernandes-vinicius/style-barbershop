@@ -8,13 +8,18 @@ import { Card, CardContent } from '@/app/_components/ui/card'
 
 export function Header() {
   return (
-    <Card className="bg-background rounded-none border-l-0 border-r-0">
+    <Card className="rounded-none border-l-0 border-r-0 bg-background">
       <CardContent className="flex items-center justify-between px-5 py-4">
         <Link href="/" aria-label="Navigate to home">
           <StyleBarbershopLogo />
         </Link>
 
-        <Button aria-label="Open menu" size="icon" variant="ghost">
+        <Button
+          aria-label="Open menu"
+          type="button"
+          size="icon"
+          variant="ghost"
+        >
           <MenuIcon className="size-5" />
         </Button>
       </CardContent>
