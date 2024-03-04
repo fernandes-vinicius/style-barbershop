@@ -2,6 +2,7 @@ import './globals.css'
 
 import type { Metadata } from 'next'
 
+import { Footer } from '@/app/_components/footer'
 import { fontSans } from '@/app/_lib/fonts'
 
 export const metadata: Metadata = {
@@ -15,7 +16,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={fontSans.variable}>
       <body className="dark">
-        <div className="flex h-screen flex-col">{children}</div>
+        <div className="flex h-screen flex-col">
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   )
