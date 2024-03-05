@@ -4,6 +4,12 @@ const prisma = new PrismaClient()
 
 async function main() {
   try {
+    // Drop all data
+    await prisma.service.deleteMany()
+    await prisma.booking.deleteMany()
+    await prisma.barbershop.deleteMany()
+    await prisma.user.deleteMany()
+
     const images = [
       'https://utfs.io/f/8d6da0f9-49d5-4204-b47b-bdaa8c243d9d-16p.png',
       'https://utfs.io/f/e15a8f96-94de-4c9e-8631-c87f6ea68803-16q.png',
