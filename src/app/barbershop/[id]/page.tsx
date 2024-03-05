@@ -8,7 +8,7 @@ import { Separator } from '@/app/_components/ui/separator'
 import { db } from '@/app/_lib/prisma'
 
 import { BackButton } from './_components/back-button'
-import { BarbershopInfo } from './_components/barbershop-info'
+import { ServiceItem } from './_components/service-item'
 
 interface BarbershopPageProps {
   params: {
@@ -21,6 +21,9 @@ export default async function BarbershopPage({ params }: BarbershopPageProps) {
     where: {
       id: params.id,
     },
+    include: {
+      services: true,
+    },
   })
 
   if (!barbershop) {
@@ -28,8 +31,8 @@ export default async function BarbershopPage({ params }: BarbershopPageProps) {
   }
 
   return (
-    <main className="relative flex flex-1 flex-col">
-      <div className="relative z-10 h-full max-h-64 w-screen">
+    <main className="relative flex flex-1 flex-col pb-12">
+      <div className="relative z-10 h-64 w-screen">
         <Image
           src={barbershop.imageUrl}
           alt={barbershop.name}
@@ -84,7 +87,12 @@ export default async function BarbershopPage({ params }: BarbershopPageProps) {
       </div>
 
       <div className="mt-6">
-        <BarbershopInfo barbershop={barbershop} />
+        {/* <BarbershopInfo barbershop={barbershop} /> */}
+        <div className="flex flex-col gap-3 px-5">
+          {barbershop.services.map((service) => (
+            <ServiceItem key={service.id} service={service} />
+          ))}
+        </div>
       </div>
     </main>
   )
