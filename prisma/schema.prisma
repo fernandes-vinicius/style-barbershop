@@ -21,7 +21,7 @@ model Barbershop {
   services Service[]
   bookings Booking[]
 
-  // @@map(name: "barbershop")
+  @@map(name: "barbershop")
 }
 
 model Service {
@@ -34,7 +34,7 @@ model Service {
   barbershopId String
   bookings     Booking[]
 
-  // @@map(name: "services")
+  @@map(name: "services")
 }
 
 model Booking {
@@ -47,7 +47,7 @@ model Booking {
   service      Service    @relation(fields: [serviceId], references: [id])
   serviceId    String
 
-  // @@map(name: "bookings")
+  @@map(name: "bookings")
 }
 
 model Account {
