@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { type Barbershop } from '@prisma/client'
 import { StarIcon } from 'lucide-react'
@@ -45,8 +46,8 @@ export function BarbershopItem({ barbershop }: BarbershopItemProps) {
             </p>
           </div>
 
-          <Button type="button" variant="secondary">
-            Reservar
+          <Button asChild variant="secondary">
+            <Link href={`/barbershop/${barbershop.id}`}>Reservar</Link>
           </Button>
         </div>
       </CardContent>
