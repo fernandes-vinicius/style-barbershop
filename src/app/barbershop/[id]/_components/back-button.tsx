@@ -10,7 +10,8 @@ export function BackButton() {
   const router = useRouter()
 
   function handleBack() {
-    router.back()
+    // router.back()
+    router.replace('/')
   }
 
   return (

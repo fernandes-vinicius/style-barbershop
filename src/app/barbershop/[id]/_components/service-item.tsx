@@ -2,15 +2,17 @@ import Image from 'next/image'
 
 import { type Service } from '@prisma/client'
 
-import { Button } from '@/app/_components/ui/button'
 import { Card, CardContent } from '@/app/_components/ui/card'
 import { formatCentsToCurrency } from '@/app/_lib/utils'
 
+import { BookingButton } from './booking-button'
+
 interface ServiceItemProps {
   service: Service
+  isAuthenticated?: boolean
 }
 
-export function ServiceItem({ service }: ServiceItemProps) {
+export function ServiceItem({ service, isAuthenticated }: ServiceItemProps) {
   return (
     <Card>
       <CardContent className="p-3">
@@ -34,9 +36,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
                 {formatCentsToCurrency(Number(service.price))}
               </h3>
 
-              <Button type="button" variant="secondary" size="sm">
-                Reservar
-              </Button>
+              <BookingButton isAuthenticated={isAuthenticated} />
             </div>
           </div>
         </div>

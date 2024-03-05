@@ -1,4 +1,3 @@
-import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 
 import { CalendarIcon, HomeIcon, UserCircleIcon, UserIcon } from 'lucide-react'
@@ -12,12 +11,10 @@ import {
 } from '@/app/_components/ui/avatar'
 import { Button } from '@/app/_components/ui/button'
 import { SheetClose } from '@/app/_components/ui/sheet'
-import { authOPtions } from '@/app/_lib/auth'
+import { getSessionUser } from '@/app/_lib/auth'
 
 export async function SideMenu() {
-  const session = await getServerSession(authOPtions)
-
-  const user = session?.user
+  const user = await getSessionUser()
 
   return (
     <div>

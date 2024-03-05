@@ -7,6 +7,7 @@ import { SideMenu } from '@/app/_components/side-menu'
 import { Button } from '@/app/_components/ui/button'
 import { Separator } from '@/app/_components/ui/separator'
 import { Sheet, SheetContent, SheetTrigger } from '@/app/_components/ui/sheet'
+import { getSessionUser } from '@/app/_lib/auth'
 import { db } from '@/app/_lib/prisma'
 
 import { BackButton } from './_components/back-button'
@@ -28,6 +29,8 @@ interface BarbershopPageProps {
 
 export default async function BarbershopPage(props: BarbershopPageProps) {
   const { params, searchParams } = props
+
+  const user = await getSessionUser()
 
   const currentContent = (searchParams.content as ContentType) || 'services'
 
@@ -106,7 +109,11 @@ export default async function BarbershopPage(props: BarbershopPageProps) {
       {currentContent === 'services' && (
         <div className="flex flex-col gap-3 px-5 pt-6">
           {barbershop.services.map((service) => (
-            <ServiceItem key={service.id} service={service} />
+            <ServiceItem
+              key={service.id}
+              service={service}
+              isAuthenticated={!!user}
+            />
           ))}
         </div>
       )}
