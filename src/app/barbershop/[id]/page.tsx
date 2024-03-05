@@ -8,15 +8,27 @@ import { Separator } from '@/app/_components/ui/separator'
 import { db } from '@/app/_lib/prisma'
 
 import { BackButton } from './_components/back-button'
+import { BarbershopInfo } from './_components/barbershop-info'
 import { ServiceItem } from './_components/service-item'
+import {
+  type ContentType,
+  ToggleContentButtons,
+} from './_components/toggle-content-buttons'
 
 interface BarbershopPageProps {
   params: {
     id: string
   }
+  searchParams: {
+    content?: string
+  }
 }
 
-export default async function BarbershopPage({ params }: BarbershopPageProps) {
+export default async function BarbershopPage(props: BarbershopPageProps) {
+  const { params, searchParams } = props
+
+  const currentContent = (searchParams.content as ContentType) || 'services'
+
   const barbershop = await db.barbershop.findFirst({
     where: {
       id: params.id,
@@ -79,20 +91,23 @@ export default async function BarbershopPage({ params }: BarbershopPageProps) {
 
       <Separator className="my-6" />
 
-      <div className="flex items-center gap-3 px-5">
-        <Button type="button">Serviços</Button>
-        <Button type="button" variant="outline">
-          Informações
-        </Button>
+      <div className="px-5">
+        <ToggleContentButtons currentContent={currentContent} />
       </div>
 
-      {/* <BarbershopInfo barbershop={barbershop} /> */}
+      {currentContent === 'services' && (
+        <div className="flex flex-col gap-3 px-5 pt-6">
+          {barbershop.services.map((service) => (
+            <ServiceItem key={service.id} service={service} />
+          ))}
+        </div>
+      )}
 
-      <div className="flex  flex-col gap-3 px-5 pt-6">
-        {barbershop.services.map((service) => (
-          <ServiceItem key={service.id} service={service} />
-        ))}
-      </div>
+      {currentContent === 'info' && (
+        <div className="pt-6">
+          <BarbershopInfo barbershop={barbershop} />
+        </div>
+      )}
     </main>
   )
 }
