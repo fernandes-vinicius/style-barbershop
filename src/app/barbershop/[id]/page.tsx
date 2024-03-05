@@ -3,8 +3,10 @@ import { notFound } from 'next/navigation'
 
 import { MapPinIcon, MenuIcon, StarIcon } from 'lucide-react'
 
+import { SideMenu } from '@/app/_components/side-menu'
 import { Button } from '@/app/_components/ui/button'
 import { Separator } from '@/app/_components/ui/separator'
+import { Sheet, SheetContent, SheetTrigger } from '@/app/_components/ui/sheet'
 import { db } from '@/app/_lib/prisma'
 
 import { BackButton } from './_components/back-button'
@@ -61,16 +63,22 @@ export default async function BarbershopPage(props: BarbershopPageProps) {
         <BackButton />
       </div>
 
-      <div className="absolute right-5 top-6 z-20">
-        <Button
-          aria-label="Open menu"
-          type="button"
-          variant="secondary"
-          size="icon"
-        >
-          <MenuIcon className="size-5" />
-        </Button>
-      </div>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button
+            aria-label="Open menu"
+            type="button"
+            variant="secondary"
+            size="icon"
+            className="absolute right-5 top-6 z-20"
+          >
+            <MenuIcon className="size-5" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent className="p-0">
+          <SideMenu />
+        </SheetContent>
+      </Sheet>
 
       <div className="space-y-3 px-5 pt-3">
         <h1 className="text-xl font-bold">{barbershop.name}</h1>
