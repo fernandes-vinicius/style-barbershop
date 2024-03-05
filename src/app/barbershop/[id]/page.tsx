@@ -32,7 +32,7 @@ export default async function BarbershopPage({ params }: BarbershopPageProps) {
 
   return (
     <main className="relative flex flex-1 flex-col pb-12">
-      <div className="relative z-10 h-64 w-screen">
+      <div className="relative z-10 h-64 w-full">
         <Image
           src={barbershop.imageUrl}
           alt={barbershop.name}
@@ -40,7 +40,7 @@ export default async function BarbershopPage({ params }: BarbershopPageProps) {
           quality={100}
           priority
           fill
-          className="opacity-75"
+          className="opacity-65"
           style={{ objectFit: 'cover' }}
         />
       </div>
@@ -86,13 +86,12 @@ export default async function BarbershopPage({ params }: BarbershopPageProps) {
         </Button>
       </div>
 
-      <div className="mt-6">
-        {/* <BarbershopInfo barbershop={barbershop} /> */}
-        <div className="flex flex-col gap-3 px-5">
-          {barbershop.services.map((service) => (
-            <ServiceItem key={service.id} service={service} />
-          ))}
-        </div>
+      {/* <BarbershopInfo barbershop={barbershop} /> */}
+
+      <div className="flex  flex-col gap-3 px-5 pt-6">
+        {barbershop.services.map((service) => (
+          <ServiceItem key={service.id} service={service} />
+        ))}
       </div>
     </main>
   )

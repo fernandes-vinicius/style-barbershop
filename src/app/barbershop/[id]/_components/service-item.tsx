@@ -24,11 +24,10 @@ export function ServiceItem({ service }: ServiceItemProps) {
             style={{ objectFit: 'contain' }}
           />
 
-          <div className="flex flex-col">
-            <h2 className="mt-1 text-sm font-bold">{service.name}</h2>
-            <p className="text-sm text-[#838896]">
-              Estilo personalizado com as últimas tendências.
-            </p>
+          <div className="flex flex-1 flex-col">
+            <h2 className="text-sm font-bold">{service.name}</h2>
+
+            <p className="mt-1 text-sm text-[#838896]">{service.description}</p>
 
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-[#8162FF]">
