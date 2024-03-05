@@ -9,7 +9,7 @@ import { Card, CardContent } from '@/app/_components/ui/card'
 export function Header() {
   return (
     <Card className="rounded-none border-l-0 border-r-0 bg-background">
-      <CardContent className="flex items-center justify-between px-5 py-4">
+      <CardContent className="flex items-center justify-between p-5">
         <Link href="/" aria-label="Navigate to home">
           <StyleBarbershopLogo />
         </Link>
