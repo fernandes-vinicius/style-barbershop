@@ -18,7 +18,7 @@ export async function SideMenu() {
 
   return (
     <div>
-      <div className="border-b p-5">
+      <div className="border-b px-5 py-6">
         <h2 className="text-left text-base font-bold">Menu</h2>
       </div>
 
