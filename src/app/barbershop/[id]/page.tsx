@@ -112,6 +112,7 @@ export default async function BarbershopPage(props: BarbershopPageProps) {
             <ServiceItem
               key={service.id}
               service={service}
+              barbershop={barbershop}
               isAuthenticated={!!user}
             />
           ))}

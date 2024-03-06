@@ -1,18 +1,46 @@
+'use client'
+
+import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 
-import { type Service } from '@prisma/client'
+import { type MouseEvent, useState } from 'react'
 
+import type { Barbershop, Service } from '@prisma/client'
+
+import { Button } from '@/app/_components/ui/button'
 import { Card, CardContent } from '@/app/_components/ui/card'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/app/_components/ui/sheet'
 import { formatCentsToCurrency } from '@/app/_lib/utils'
 
-import { BookingButton } from './booking-button'
+import { BookingForm } from './booking-form'
 
 interface ServiceItemProps {
+  barbershop: Barbershop
   service: Service
   isAuthenticated?: boolean
 }
 
-export function ServiceItem({ service, isAuthenticated }: ServiceItemProps) {
+export function ServiceItem(props: ServiceItemProps) {
+  const { barbershop, service, isAuthenticated } = props
+
+  const [open, setOpen] = useState(false)
+
+  async function handleBooking(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault()
+
+    if (!isAuthenticated) {
+      await signIn('google')
+    } else {
+      setOpen(true)
+    }
+  }
+
   return (
     <Card>
       <CardContent className="p-3">
@@ -36,7 +64,29 @@ export function ServiceItem({ service, isAuthenticated }: ServiceItemProps) {
                 {formatCentsToCurrency(Number(service.price))}
               </h3>
 
-              <BookingButton isAuthenticated={isAuthenticated} />
+              <Sheet open={open} onOpenChange={setOpen}>
+                <SheetTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={handleBooking}
+                  >
+                    Reservar
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="overflow-y-auto p-0">
+                  <SheetHeader className="border-b px-5 py-6 text-left">
+                    <SheetTitle className="font-bold">Fazer Reserva</SheetTitle>
+                  </SheetHeader>
+                  <div className="my-6">
+                    <BookingForm
+                      service={service}
+                      barbershopName={barbershop.name}
+                    />
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </div>
