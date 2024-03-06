@@ -5,6 +5,10 @@ type DateType = string | number | Date
 
 export abstract class DateManger {
   abstract format: (format?: string) => string
+
+  abstract setHours: (hours: number) => Date
+
+  abstract setMinutes: (minutes: number) => Date
 }
 
 class DateFnsDateManger implements DateManger {
@@ -19,6 +23,14 @@ class DateFnsDateManger implements DateManger {
 
   format(format = 'dd/MM/yyyy') {
     return dateFns.format(this.date, format, { locale: this.locale })
+  }
+
+  setHours(hours: number) {
+    return dateFns.setHours(this.date, hours)
+  }
+
+  setMinutes(minutes: number) {
+    return dateFns.setMinutes(this.date, minutes)
   }
 }
 

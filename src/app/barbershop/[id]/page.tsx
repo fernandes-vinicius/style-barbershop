@@ -113,7 +113,7 @@ export default async function BarbershopPage(props: BarbershopPageProps) {
               key={service.id}
               service={service}
               barbershop={barbershop}
-              isAuthenticated={!!user}
+              user={user}
             />
           ))}
         </div>

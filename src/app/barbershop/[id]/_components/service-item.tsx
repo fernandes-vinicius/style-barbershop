@@ -1,5 +1,6 @@
 'use client'
 
+import { type User } from 'next-auth'
 import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 
@@ -23,22 +24,26 @@ import { BookingForm } from './booking-form'
 interface ServiceItemProps {
   barbershop: Barbershop
   service: Service
-  isAuthenticated?: boolean
+  user?: User
 }
 
 export function ServiceItem(props: ServiceItemProps) {
-  const { barbershop, service, isAuthenticated } = props
+  const { barbershop, service, user } = props
 
   const [open, setOpen] = useState(false)
 
   async function handleBooking(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
 
-    if (!isAuthenticated) {
+    if (!user) {
       await signIn('google')
     } else {
       setOpen(true)
     }
+  }
+
+  function handleBookingSuccess() {
+    setOpen(false)
   }
 
   return (
@@ -80,10 +85,14 @@ export function ServiceItem(props: ServiceItemProps) {
                     <SheetTitle className="font-bold">Fazer Reserva</SheetTitle>
                   </SheetHeader>
                   <div className="my-6">
-                    <BookingForm
-                      service={service}
-                      barbershopName={barbershop.name}
-                    />
+                    {user && (
+                      <BookingForm
+                        service={service}
+                        barbershopName={barbershop.name}
+                        userId={user.id}
+                        onSuccess={handleBookingSuccess}
+                      />
+                    )}
                   </div>
                 </SheetContent>
               </Sheet>

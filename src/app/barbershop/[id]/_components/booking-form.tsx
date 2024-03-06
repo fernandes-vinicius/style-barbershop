@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 
 import { Service } from '@prisma/client'
 import { ptBR } from 'date-fns/locale'
+import { Loader2Icon } from 'lucide-react'
 
 import { Button } from '@/app/_components/ui/button'
 import { Calendar } from '@/app/_components/ui/calendar'
@@ -12,16 +13,22 @@ import { Separator } from '@/app/_components/ui/separator'
 import { dateManager } from '@/app/_lib/date-manager'
 import { cn, formatCentsToCurrency } from '@/app/_lib/utils'
 
+import { saveBooking } from '../_actions/booking'
 import { generateDayTimeList } from '../_lib/utils'
 
 interface BookingFormProps {
   service: Service
   barbershopName: string
+  userId: string
+  onSuccess?: () => void
 }
 
-export function BookingForm({ service, barbershopName }: BookingFormProps) {
+export function BookingForm(props: BookingFormProps) {
+  const { service, barbershopName, userId, onSuccess } = props
+
   const [selectedDate, setSelectedDate] = useState<Date | undefined>()
   const [selectedTime, setSelectedTime] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const timeList = useMemo(() => {
     return selectedDate ? generateDayTimeList(selectedDate) : []
@@ -34,6 +41,38 @@ export function BookingForm({ service, barbershopName }: BookingFormProps) {
 
   function handleSelectTime(time: string) {
     setSelectedTime(time)
+  }
+
+  async function handleBookingSubmit() {
+    if (!selectedDate || !selectedTime) {
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      const hour = Number(selectedTime.split(':')[0])
+      const minutes = Number(selectedTime.split(':')[1])
+
+      const bookingDate = dateManager(
+        dateManager(selectedDate).setHours(hour),
+      ).setMinutes(minutes)
+
+      await saveBooking({
+        serviceId: service.id,
+        barbershopId: service.barbershopId,
+        date: bookingDate,
+        userId,
+      })
+
+      if (onSuccess) {
+        onSuccess()
+      }
+    } catch (error) {
+      console.log('Save booking error', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -135,8 +174,10 @@ export function BookingForm({ service, barbershopName }: BookingFormProps) {
         <Button
           type="button"
           className="w-full"
-          disabled={!selectedDate || !selectedTime}
+          disabled={!selectedDate || !selectedTime || isSubmitting}
+          onClick={handleBookingSubmit}
         >
+          {isSubmitting && <Loader2Icon className="size-4 animate-spin" />}
           Confirmar
         </Button>
       </div>
